@@ -2,10 +2,14 @@
 <html>
 
 <head>
+	<!-- Required libraries -->
 	<script src="jquery-1.11.1.js"></script>
 	<script src="jquery.cookie.js"></script>
 	<script src="ohmage.js"></script>
+
+	<!-- Your application -->
 	<script src="app.js"></script>	
+	<link rel="stylesheet" href="app.css">
 
 	<!-- Bootstrap, not really needed but always nice -->
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -23,14 +27,20 @@
 
 	<p>From this page, you can also open chrome developer tools and play around with the <code>oh</code> object to call the various ohmage APIs. Below a silly example app that shows a table with your current classes and campaigns.</p>
 
-	<h2>Campaigns</h2>
+	<button id="startbutton" type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-user"></span> Load User Info!</button>
+
+	<h3>Campaigns <img class="spinner" src="spinner.gif"></h3>
+
+	<div class="text-center">
+		
+	</div>
 
 	<table class="table table-hover" id="campaigntable">
 		<thead><tr><th>URN</th><th>Name</th></tr></thead>
 		<tbody></tbody>
 	</table>
 
-	<h2>Classes</h2>
+	<h3>Classes <img class="spinner" src="spinner.gif"></h3>
 
 	<table class="table table-hover" id="classtable">
 		<thead><tr><th>URN</th><th>Name</th></tr></thead>

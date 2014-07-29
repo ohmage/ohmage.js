@@ -21,13 +21,27 @@ oh.user.whoami().done(function(username){
 	//This is where you put your app code
 	//Silly example app shows user info
 
-	oh.user.info().done(function(x){
-		$.each(x[username].campaigns, function(urn, name){
-			$("#campaigntable tbody").append("<tr><td>" + urn + "</td><td>" + name + "</td></tr>")
-		});
-		$.each(x[username].classes, function(urn, name){
-			$("#classtable tbody").append("<tr><td>" + urn + "</td><td>" + name + "</td></tr>")
-		});		
-	})
+	$("#startbutton").click(function(){
 
+		//empty tables
+		$("#campaigntable tbody").empty();
+		$("#classtable tbody").empty();
+
+		//show the spinners
+		$(".spinner").show();
+
+		//init the request
+		oh.user.info().done(function(x){
+			//success callback
+			$.each(x[username].campaigns, function(urn, name){
+				$("#campaigntable tbody").append("<tr><td>" + urn + "</td><td>" + name + "</td></tr>")
+			});
+			$.each(x[username].classes, function(urn, name){
+				$("#classtable tbody").append("<tr><td>" + urn + "</td><td>" + name + "</td></tr>")
+			});
+		}).always(function(){
+			//success or fail callback
+			$(".spinner").hide();
+		})
+	})
 });
