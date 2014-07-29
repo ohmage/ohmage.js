@@ -18,6 +18,9 @@ oh.user.whoami().done(function(username){
 	//make sure we don't timeout
 	oh.keepalive();
 
+	//set username in text
+	$("#welcome").text(username)
+
 	//This is where you put your app code
 	//Silly example app shows user info
 
