@@ -21,7 +21,7 @@ function Ohmage(app, client){
 	//container with optional set functions
 	var oh = {}
 
-	oh.addcb = function(name, fun){
+	oh.callback = function(name, fun){
 		callbacks.push({name:name, fun:fun})
 		return oh;
 	}

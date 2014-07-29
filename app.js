@@ -2,13 +2,13 @@
 var oh = Ohmage("/app", "myclientname")
 
 //attach global callbacks
-oh.addcb("done", function(x, status, req){
+oh.callback("done", function(x, status, req){
 	//for debugging only
 	console.log(x);
 })
 
 //global error handler. In ohmage 200 means unauthenticated
-oh.addcb("error", function(msg, code, req){
+oh.callback("error", function(msg, code, req){
 	(code == 200) ? window.location.replace("/web/#login") : alert("Error!\n" + msg);
 });
 
