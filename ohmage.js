@@ -1,4 +1,4 @@
-/* 
+/*
  * JavaScript client library for Ohmage 2.xx
  * Autor: Jeroen Ooms <jeroenooms@gmail.com>
  * License: Apache 2
@@ -32,20 +32,23 @@ function Ohmage(app, client){
 		//support for multiple errorfuns and chaining
 		var errorfuns = [];
 		function error(x,y,z){
-			$.each(errorfuns, function(i, val){
-				val(x,y,z)
-			});
+			//don't call on HTTP 0 (canceled)
+			if(z.status){
+				$.each(errorfuns, function(i, val){
+					val(x,y,z)
+				});
+			}
 		}
 
 		//default is to return res.result.data property
 		var datafun = datafun || function(x){ return x.data; }
-		
+
 		//input processing
-		var data = data || {};		
-		
+		var data = data || {};
+
 		//default parameter
 		data.client = client;
-			
+
 		//add auth_token from cookie
 		if($.cookie('auth_token')){
 			data.auth_token = $.cookie('auth_token');
@@ -66,7 +69,7 @@ function Ohmage(app, client){
 
 			//ohmage returns whatever it feels like.
 			if(req.getResponseHeader("content-type") == "application/json"){
-				
+
 				//ohmage content-type cannot be trusted
 				if(!rsptxt || rsptxt == "") {
 					var errorThrown = "Fail: " + path + ". Ohmage returned undefined error."
@@ -116,6 +119,7 @@ function Ohmage(app, client){
 				fun(x,y,z);
 				return req
 			});
+			return req
 		}
 
 		//trigger global callbacks
@@ -123,7 +127,7 @@ function Ohmage(app, client){
 			req[val.name](val.fun);
 		});
 
-		return(req)
+		return req
 	}
 
 	//API sections
@@ -151,7 +155,7 @@ function Ohmage(app, client){
 	//shorthand for above
 	oh.login = function(user, password){
 		return oh.user.auth_token({
-			user:user, 
+			user:user,
 			password : password
 		});
 	}
@@ -164,13 +168,13 @@ function Ohmage(app, client){
 		return oh.call("/user_info/read")
 	}
 
-	//@args user_list 
+	//@args user_list
 	oh.user.read = function(data){
 		return oh.call("/user/read", data)
 	}
 
 	//@args class_urn_list
-	//@args first_name 
+	//@args first_name
 	//@args last_name
 	//@args organization
 	//@args personal_id
@@ -251,8 +255,8 @@ function Ohmage(app, client){
 	//shorthand
 	oh.campaign.addclass = function(campaign_urn, class_urn){
 		return oh.campaign.update({
-			campaign_urn : campaign_urn,	
-			class_list_add : class_urn		
+			campaign_urn : campaign_urn,
+			class_list_add : class_urn
 		})
 	}
 
@@ -305,8 +309,8 @@ function Ohmage(app, client){
 	function debounce(func, wait, immediate) {
 		var timeout, args, context, timestamp, result;
 
-		var now = function() { 
-			return new Date().getTime(); 
+		var now = function() {
+			return new Date().getTime();
 		};
 
 		var later = function() {
