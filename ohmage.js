@@ -104,8 +104,11 @@ function Ohmage(app, client){
 			//jQuery failFilter
 			var filter = $.Deferred();
 
-			//Augment Ohmage error message
-			error("HTTP " + req.status + ": " + req.responseText, -3, req)
+			//don't throw error when status == 0 (request canceled)
+			if(req.status){
+				error("HTTP " + req.status + ": " + req.responseText, -3, req)
+			}
+
 			filter.reject(req, textStatus, errorThrown);
 
 			//return to fail() callback
