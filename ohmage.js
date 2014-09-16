@@ -54,8 +54,8 @@ function Ohmage(app, client){
 			data.auth_token = $.cookie('auth_token');
 		}
 
-		//actual ajax
-		var req = $.ajax({
+		//ajax parameters
+		var ajaxparams = {
 			type: "POST",
 			url : app + path,
 			data: data,
@@ -63,7 +63,17 @@ function Ohmage(app, client){
 			xhrFields: {
 				withCredentials: true
 			}
-		}).then(function(rsptxt, textStatus, req) {
+		}
+
+		//ohmage multipart hack
+		if(data instanceof FormData){
+			ajaxparams.contentType = false;
+			ajaxparams.cache = false;
+			ajaxparams.processData = false;
+		}
+
+		//actual ajax
+		var req = $.ajax(ajaxparams).then(function(rsptxt, textStatus, req) {
 			//jQuery doneFilter
 			var filter = $.Deferred()
 
@@ -131,6 +141,17 @@ function Ohmage(app, client){
 		});
 
 		return req
+	}
+
+	//some APIs only support multipart so we need to hack around that
+	oh.callmultipart = function(path, data, datafun){
+		var formdata = new FormData();
+		formdata.append("client", client)
+		formdata.append("auth_token", $.cookie('auth_token'));
+		$.each(data, function(key, value){
+			formdata.append(key, value);
+		});
+		return oh.call(path, formdata, datafun);
 	}
 
 	//API sections
