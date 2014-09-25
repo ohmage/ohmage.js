@@ -144,7 +144,7 @@ function Ohmage(app, client){
 	}
 
 	//some APIs only support multipart so we need to hack around that
-	oh.callmultipart = function(path, data, datafun){
+	oh.callform = function(path, data, datafun){
 		var formdata = new FormData();
 		formdata.append("client", client)
 		formdata.append("auth_token", $.cookie('auth_token'));
