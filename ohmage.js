@@ -331,6 +331,19 @@ function Ohmage(app, client){
 		return oh.call("/campaign/delete", data)
 	}
 
+	//@args campaign_urn
+	//@args description
+	//@args xml
+	//@args authored_by
+	//@args start_date
+	//@args end_date
+	//@args privacy_state
+	//@args running_state
+	//@note admin-only api
+ 	oh.campaign.search = function(data){
+ 		return oh.call("/campaign/search", data)
+ 	}
+
 	//@args document_name
 	//@args privacy_state
 	//@args document_class_role_list
