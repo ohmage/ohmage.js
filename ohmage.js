@@ -215,6 +215,18 @@ function Ohmage(app, client){
 		return oh.call("/user/change_password", data)
 	}
 
+	//@args username
+	//@args email_address
+	//@note more related to registration apis...
+ 	oh.user.reset_password = function(data){
+ 		return oh.call("/user/reset_password", data)
+ 	}
+ 
+  //@args registration_id
+ 	oh.user.activate = function(data){
+ 		return oh.call("/user/activate", data)
+ 	}
+
 
 	//@args class_urn_list
 	oh.class.read = function(data){
