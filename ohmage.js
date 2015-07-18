@@ -162,6 +162,8 @@ function Ohmage(app, client){
 	oh.document = {};
 	oh.registration = {};
 	oh.audit = {};
+	oh.survey = {};
+	oh.response = {};
 
 	//API wrappres
 	oh.config.read = function(){
@@ -416,6 +418,39 @@ function Ohmage(app, client){
 	oh.audit.read = function(data){
 		//ohmage returns audits in this call under the 'audits' object
 		return oh.call("/audit/read", data, function(x){ return x.audits; })
+	}
+
+	oh.survey.count = function(urn){
+		data = {
+			campaign_urn : urn,
+			id : "privacy_state"
+		};
+		return oh.call("/survey_response/function/read", data)
+	}
+
+	oh.response.read = function(urn){
+		return oh.call("/survey_response/read", {
+			campaign_urn : urn,
+			column_list : "urn:ohmage:special:all",
+			output_format : "json-rows",
+			survey_id_list : "urn:ohmage:special:all",
+			user_list : "urn:ohmage:special:all"
+		})
+	}
+
+	oh.response.delete = function(urn, survey_key){
+		return oh.call("/survey_response/delete", {
+			campaign_urn : urn,
+			survey_key : survey_key
+		})
+	}
+
+	oh.response.update = function(urn, survey_key, state){
+		return oh.call("/survey_response/update", {
+			campaign_urn : urn,
+			survey_key : survey_key,
+			privacy_state : (state ? "shared" : "private")
+		});
 	}
 
 	//no more than 1 ping every 60 sec
