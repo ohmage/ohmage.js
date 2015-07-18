@@ -161,6 +161,7 @@ function Ohmage(app, client){
 	oh.campaign = {};
 	oh.document = {};
 	oh.registration = {};
+	oh.audit = {};
 
 	//API wrappres
 	oh.config.read = function(){
@@ -359,6 +360,22 @@ function Ohmage(app, client){
  	oh.user.register = function(data){
  		return oh.call("/user/register", data)
  	}
+
+ 	//@args request_type
+ 	//@args uri
+ 	//@args client_value
+ 	//@args device_id_value
+ 	//@args response_type
+ 	//@args error_code
+ 	//@args start_date
+ 	//@args end_date
+ 	//@note admin-only api
+ 	//@note passing no date params will result in all audits return.
+ 	//      this is a phenomenally bad idea.
+	oh.audit.read = function(data){
+		//ohmage returns audits in this call under the 'audits' object
+		return oh.call("/audit/read", data, function(x){ return x.audits; })
+	}
 
 	//no more than 1 ping every 60 sec
 	oh.ping = debounce(oh.user.whoami, 60*1000, true);
