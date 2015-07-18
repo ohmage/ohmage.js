@@ -346,6 +346,13 @@ function Ohmage(app, client){
  		return oh.call("/campaign/search", data)
  	}
 
+ 	oh.campaign.readall = function(data){
+ 		//set a default
+ 		data = data || {};
+ 		data.output_format = data.output_format || "short";
+ 		return oh.call("/campaign/read", data);
+ 	}
+
 	//@args document_name
 	//@args privacy_state
 	//@args document_class_role_list
