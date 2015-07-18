@@ -160,6 +160,7 @@ function Ohmage(app, client){
 	oh.class = {};
 	oh.campaign = {};
 	oh.document = {};
+	oh.registration = {};
 
 	//API wrappres
 	oh.config.read = function(){
@@ -328,6 +329,23 @@ function Ohmage(app, client){
  	//@args class_role_list_remove
  	oh.document.update = function(data){
  		return oh.call("/document/update", data)
+ 	}
+
+ 	oh.registration.read = function(){
+ 		return oh.call("/registration/read")
+ 	}
+ 
+ 	//@args username
+ 	//@args password
+ 	//@args email_address
+ 	//if ohmage <= 2.16
+ 	//@args recaptcha_challenge_field
+ 	//@args recaptcha_response_field
+ 	//if ohmage >= 2.17
+ 	//@args recaptcha_version = "2.0"
+ 	//@args recaptcha_response_field
+ 	oh.user.register = function(data){
+ 		return oh.call("/user/register", data)
  	}
 
 	//no more than 1 ping every 60 sec
