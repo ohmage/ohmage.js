@@ -228,6 +228,34 @@ function Ohmage(app, client){
  		return oh.call("/user/activate", data)
  	}
 
+ 	//@args user_list
+ 	//@note admin-only api
+	oh.user.delete = function(data){
+		return oh.call("/user/delete", data);
+	}
+
+	//@note api is undocumented.
+  //@note admin-only api
+	oh.user.search = function(data){
+		return oh.call("/user/search", data)
+	}
+
+  //@args username
+  //@args password
+  //@args admin
+  //@args enabled
+  //@args new_account
+  //@args campaign_creation_privilege
+	oh.user.create = function(data){
+		return oh.call("/user/create", data)
+	}
+
+	//@args see: https://github.com/ohmage/server/wiki/User-Manipulation#input-parameters-5
+	//@note admin-only api
+	oh.user.update = function(data){
+		return oh.call("/user/update", data)
+	}
+
 
 	//@args class_urn_list
 	oh.class.read = function(data){
