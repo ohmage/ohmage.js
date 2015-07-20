@@ -1,6 +1,6 @@
 {
   "name": "ohmage",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "JavaScript client library for Ohmage 2.x",
   "main": "ohmage.min.js",
   "repository": {
