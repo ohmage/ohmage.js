@@ -1,6 +1,6 @@
 /*
  * JavaScript client library for Ohmage 2.xx
- * Autor: Jeroen Ooms <jeroenooms@gmail.com>
+ * Author: Jeroen Ooms <jeroenooms@gmail.com>
  * License: Apache 2
  */
 
