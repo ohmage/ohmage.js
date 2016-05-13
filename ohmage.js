@@ -310,7 +310,7 @@
   
   	//@args class_urn
   	oh.class.search = function(data){
-  		return oh.call("/class/search")
+  		return oh.call("/class/search", data)
   	}
   
   	oh.campaign.read = function(data){
