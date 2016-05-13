@@ -459,6 +459,16 @@
   		})
   	}
   
+  	oh.response.read_custom = function(data){
+  		//set defaults
+  		data = data || {};
+  		data.column_list = data.column_list || "urn:ohmage:special:all";
+  		data.output_format = data.output_format || "json-rows";
+  		data.survey_id_list = data.survey_id_list || "urn:ohmage:special:all";
+  		data.user_list = data.user_list || "urn:ohmage:special:all";
+  		return oh.call("/survey_response/read", data)
+  	}
+  
   	oh.response.delete = function(urn, survey_key){
   		return oh.call("/survey_response/delete", {
   			campaign_urn : urn,
