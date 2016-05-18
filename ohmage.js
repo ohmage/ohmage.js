@@ -483,8 +483,8 @@
 			});
 		}
 
-		//no more than 1 ping every 60 sec
-		oh.ping = debounce(oh.user.whoami, 60*1000, true);
+		//no more than 1 ping every 59 sec
+		oh.ping = throttle(oh.user.whoami, 59*1000);
 
 		//ping once every t sec
 		oh.keepalive = once(function(t){
@@ -500,41 +500,45 @@
 		});
 
 		// Copied from underscore.js
-		function debounce(func, wait, immediate) {
-			var timeout, args, context, timestamp, result;
-
-			var now = function() {
-				return new Date().getTime();
-			};
+		function throttle(func, wait, options) {
+			var timeout, context, args, result;
+			var previous = 0;
+			if (!options) options = {};
 
 			var later = function() {
-				var last = now() - timestamp;
-				if (last < wait) {
-					timeout = setTimeout(later, wait - last);
-				} else {
-					timeout = null;
-					if (!immediate) {
-						result = func.apply(context, args);
-						context = args = null;
-					}
-				}
+				previous = options.leading === false ? 0 : _.now();
+				timeout = null;
+				result = func.apply(context, args);
+				if (!timeout) context = args = null;
 			};
 
-			return function() {
+			var throttled = function() {
+				var now = _.now();
+				if (!previous && options.leading === false) previous = now;
+				var remaining = wait - (now - previous);
 				context = this;
 				args = arguments;
-				timestamp = now();
-				var callNow = immediate && !timeout;
-				if (!timeout) {
-					timeout = setTimeout(later, wait);
-				}
-				if (callNow) {
+				if (remaining <= 0 || remaining > wait) {
+					if (timeout) {
+						clearTimeout(timeout);
+						timeout = null;
+					}
+					previous = now;
 					result = func.apply(context, args);
-					context = args = null;
+					if (!timeout) context = args = null;
+				} else if (!timeout && options.trailing !== false) {
+					timeout = setTimeout(later, remaining);
 				}
-
 				return result;
 			};
+
+			throttled.cancel = function() {
+				clearTimeout(timeout);
+				previous = 0;
+				timeout = context = args = null;
+			};
+
+			return throttled;
 		};
 
 		// Copied from underscore.js
