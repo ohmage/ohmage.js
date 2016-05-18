@@ -30,7 +30,6 @@
   
   	//globals
   	var callbacks = [];
-  	var login;
   
   	//container with optional set functions
   	var oh = {}
@@ -113,7 +112,7 @@
   					error(response.errors[0].text, response.errors[0].code, req)
   					filter.reject(req, textStatus, errorThrown);
   				} else {
-  					var msg = "JSON response did not contain result attribute."
+  					var errorThrown = "JSON response did not contain result attribute."
   					error(errorThrown, -2, req)
   					filter.reject(req, textStatus, errorThrown);
   				}
@@ -494,7 +493,7 @@
   	});
   
   	//or: keep alive only when active
-  	oh.keepactive = once(function(t){
+  	oh.keepactive = once(function(){
   		$('html').click(function() {
   			oh.ping();
   		});
@@ -553,7 +552,7 @@
   	// test run call
   	oh.config.read().done(function(x){
   		console.log("This is Ohmage/" + x.application_name + " " + x.application_version + " (" + x.application_build + ")")
-  	}).error(function(msg, code){
+  	}).error(function(msg){
   		console.log("Ohmage seems offline: " + msg)
   	});
   
